@@ -9,7 +9,6 @@ from torchvision.transforms.functional import to_pil_image
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
-
 import cv2
 
 from scipy.ndimage import gaussian_filter
@@ -22,10 +21,10 @@ warnings.filterwarnings("ignore", category=UserWarning, module="safetensors")
 
 
 
-"""Helper methods for CLIPSeg nodes"""
+# Helper methods for CLIPSeg nodes
 
 def tensor_to_numpy(tensor: torch.Tensor) -> np.ndarray:
-    """Convert a tensor to a numpy array and scale its values to 0-255."""
+    # Convert a tensor to a numpy array and scale its values to 0-255.
     array = tensor.numpy().squeeze()
     return (array * 255).astype(np.uint8)
 
@@ -56,27 +55,13 @@ def dilate_mask(mask: torch.Tensor, dilation_factor: float) -> torch.Tensor:
 
 
 
-class CLIPSeg:
+class CLIPSegToMask:
 
     def __init__(self):
         pass
     
     @classmethod
     def INPUT_TYPES(s):
-        """
-            Return a dictionary which contains config for all input fields.
-            Some types (string): "MODEL", "VAE", "CLIP", "CONDITIONING", "LATENT", "IMAGE", "INT", "STRING", "FLOAT".
-            Input types "INT", "STRING" or "FLOAT" are special values for fields on the node.
-            The type can be a list for selection.
-
-            Returns: `dict`:
-                - Key input_fields_group (`string`): Can be either required, hidden or optional. A node class must have property `required`
-                - Value input_fields (`dict`): Contains input fields config:
-                    * Key field_name (`string`): Name of a entry-point method's argument
-                    * Value field_config (`tuple`):
-                        + First value is a string indicate the type of field or a list for selection.
-                        + Secound value is a config for type "INT", "STRING" or "FLOAT".
-        """
         return {"required":
                     {
                         "image": ("IMAGE",),
@@ -91,11 +76,16 @@ class CLIPSeg:
                     }
                 }
 
-    CATEGORY = "image"
+    CATEGORY = "ReplenishNodes/Masks"
     RETURN_TYPES = ("MASK", "IMAGE", "IMAGE",)
     RETURN_NAMES = ("Mask","Heatmap Mask", "BW Mask")
 
     FUNCTION = "segment_image"
+    DESCRIPTION = """
+Create a segmentation mask from an image and a text prompt using CLIPSeg.
+"""
+    
+    
     def segment_image(self, image: torch.Tensor, text: str, blur: float, threshold: float, dilation_factor: int) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """Create a segmentation mask from an image and a text prompt using CLIPSeg.
 
@@ -175,7 +165,7 @@ class CLIPSeg:
 
     #OUTPUT_NODE = False
 
-class CombineMasks:
+class CombineSegMasks:
     def __init__(self):
         pass
 
@@ -193,7 +183,7 @@ class CombineMasks:
                     },
                 }
         
-    CATEGORY = "image"
+    CATEGORY = "ReplenishNodes/Masks"
     RETURN_TYPES = ("MASK", "IMAGE", "IMAGE",)
     RETURN_NAMES = ("Combined Mask","Heatmap Mask", "BW Mask")
 
@@ -230,6 +220,6 @@ class CombineMasks:
 # A dictionary that contains all nodes you want to export with their names
 # NOTE: names should be globally unique
 NODE_CLASS_MAPPINGS = {
-    "CLIPSeg": CLIPSeg,
-    "CombineSegMasks": CombineMasks,
+    "CLIPSegToMask": CLIPSegToMask,
+    "CombineSegMasks": CombineSegMasks,
 }

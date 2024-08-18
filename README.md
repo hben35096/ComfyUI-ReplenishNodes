@@ -1,3 +1,8 @@
+CLIPSegToMask and CombineSegMasks, both from [ComfyUI-CLIPSeg](https://github.com/biegert/ComfyUI-CLIPSeg)  
+Some practical nodes will be added one after another.
+
+---
+
 # Custom Nodes for [ComfyUI](https://github.com/comfyanonymous/ComfyUI): CLIPSeg and CombineSegMasks
 ## This repository contains two custom nodes for ComfyUI that utilize the [CLIPSeg model](https://huggingface.co/docs/transformers/main/en/model_doc/clipseg) to generate masks for image inpainting tasks based on text prompts.
 

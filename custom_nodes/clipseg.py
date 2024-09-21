@@ -24,35 +24,34 @@ warnings.filterwarnings("ignore", category=UserWarning, module="safetensors")
 # Helper methods for CLIPSeg nodes
 
 def tensor_to_numpy(tensor: torch.Tensor) -> np.ndarray:
-    # Convert a tensor to a numpy array and scale its values to 0-255.
+    # 将张量转换为 numpy 数组并将其值缩放为 0-255。
     array = tensor.numpy().squeeze()
     return (array * 255).astype(np.uint8)
 
 def numpy_to_tensor(array: np.ndarray) -> torch.Tensor:
-    """Convert a numpy array to a tensor and scale its values from 0-255 to 0-1."""
+    # 将 numpy 数组转换为 tensor 并将其值从 0-255 缩放到 0-1。
     array = array.astype(np.float32) / 255.0
     return torch.from_numpy(array)[None,]
 
 def apply_colormap(mask: torch.Tensor, colormap) -> np.ndarray:
-    """Apply a colormap to a tensor and convert it to a numpy array."""
+    # 将颜色图应用于张量并将其转换为 numpy 数组。
     colored_mask = colormap(mask.numpy())[:, :, :3]
     return (colored_mask * 255).astype(np.uint8)
 
 def resize_image(image: np.ndarray, dimensions: Tuple[int, int]) -> np.ndarray:
-    """Resize an image to the given dimensions using linear interpolation."""
+    # 使用线性插值将图像大小调整为给定尺寸。
     return cv2.resize(image, dimensions, interpolation=cv2.INTER_LINEAR)
 
 def overlay_image(background: np.ndarray, foreground: np.ndarray, alpha: float) -> np.ndarray:
-    """Overlay the foreground image onto the background with a given opacity (alpha)."""
+    # 将前景图像叠加到具有给定不透明度 （alpha） 的背景上。
     return cv2.addWeighted(background, 1 - alpha, foreground, alpha, 0)
 
 def dilate_mask(mask: torch.Tensor, dilation_factor: float) -> torch.Tensor:
-    """Dilate a mask using a square kernel with a given dilation factor."""
+    # 使用具有给定膨胀因子的方形内核扩张掩码。
     kernel_size = int(dilation_factor * 2) + 1
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     mask_dilated = cv2.dilate(mask.numpy(), kernel, iterations=1)
     return torch.from_numpy(mask_dilated)
-
 
 
 class CLIPSegToMask:
@@ -100,11 +99,11 @@ Create a segmentation mask from an image and a text prompt using CLIPSeg.
             Tuple[torch.Tensor, torch.Tensor, torch.Tensor]: The segmentation mask, the heatmap mask, and the binarized mask.
         """
             
-        # Convert the Tensor to a PIL image
-        image_np = image.numpy().squeeze()  # Remove the first dimension (batch size of 1)
-        # Convert the numpy array back to the original range (0-255) and data type (uint8)
+        # 将 Tensor 转换为 PIL 图像
+        image_np = image.numpy().squeeze()  # 删除第一个维度（批量大小为 1）
+        # 将 numpy 数组转换回原始范围 （0-255） 和数据类型 （uint8）
         image_np = (image_np * 255).astype(np.uint8)
-        # Create a PIL image from the numpy array
+        # 从 numpy 数组创建 PIL 图像
         i = Image.fromarray(image_np, mode="RGB")
 
         processor = CLIPSegProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
@@ -114,32 +113,32 @@ Create a segmentation mask from an image and a text prompt using CLIPSeg.
         
         input_prc = processor(text=prompt, images=i, padding="max_length", return_tensors="pt")
         
-        # Predict the segemntation mask
+        # 预测分离掩码
         with torch.no_grad():
             outputs = model(**input_prc)
+        preds = outputs.logits.unsqueeze(1)
+        tensor = torch.sigmoid(preds[0][0])  # get the mask
         
-        tensor = torch.sigmoid(outputs[0]) # get the mask
-        
-        # Apply a threshold to the original tensor to cut off low values
+        # 将阈值应用于原始张量以截断低值
         thresh = threshold
         tensor_thresholded = torch.where(tensor > thresh, tensor, torch.tensor(0, dtype=torch.float))
 
-        # Apply Gaussian blur to the thresholded tensor
+        # 将高斯模糊应用于阈值张量
         sigma = blur
         tensor_smoothed = gaussian_filter(tensor_thresholded.numpy(), sigma=sigma)
         tensor_smoothed = torch.from_numpy(tensor_smoothed)
 
-        # Normalize the smoothed tensor to [0, 1]
+        # 将平滑的张量标准化为 [0， 1]
         mask_normalized = (tensor_smoothed - tensor_smoothed.min()) / (tensor_smoothed.max() - tensor_smoothed.min())
 
-        # Dilate the normalized mask
+        # 扩张标准化蒙版
         mask_dilated = dilate_mask(mask_normalized, dilation_factor)
 
-        # Convert the mask to a heatmap and a binary mask
+        # 将掩码转换为热图和二进制掩码
         heatmap = apply_colormap(mask_dilated, cm.viridis)
         binary_mask = apply_colormap(mask_dilated, cm.Greys_r)
 
-        # Overlay the heatmap and binary mask on the original image
+        # 在原始图像上叠加热图和二进制掩码
         dimensions = (image_np.shape[1], image_np.shape[0])
         heatmap_resized = resize_image(heatmap, dimensions)
         binary_mask_resized = resize_image(binary_mask, dimensions)
@@ -148,14 +147,14 @@ Create a segmentation mask from an image and a text prompt using CLIPSeg.
         overlay_heatmap = overlay_image(image_np, heatmap_resized, alpha_heatmap)
         overlay_binary = overlay_image(image_np, binary_mask_resized, alpha_binary)
 
-        # Convert the numpy arrays to tensors
+        # 将 numpy 数组转换为 tensor
         image_out_heatmap = numpy_to_tensor(overlay_heatmap)
         image_out_binary = numpy_to_tensor(overlay_binary)
 
-        # Save or display the resulting binary mask
+        # 保存或显示生成的二进制掩码
         binary_mask_image = Image.fromarray(binary_mask_resized[..., 0])
 
-        # convert PIL image to numpy array
+        # 将 PIL 图像转换为 numpy 数组
         tensor_bw = binary_mask_image.convert("RGB")
         tensor_bw = np.array(tensor_bw).astype(np.float32) / 255.0
         tensor_bw = torch.from_numpy(tensor_bw)[None,]

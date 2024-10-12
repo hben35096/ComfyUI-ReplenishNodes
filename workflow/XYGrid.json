@@ -1,0 +1,1317 @@
+{
+  "last_node_id": 56,
+  "last_link_id": 60,
+  "nodes": [
+    {
+      "id": 42,
+      "type": "Load Sampler Name",
+      "pos": {
+        "0": -98.3882827758789,
+        "1": 700.3861083984375
+      },
+      "size": {
+        "0": 232.5720977783203,
+        "1": 58
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            28
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Sampler Name"
+      },
+      "widgets_values": [
+        "euler"
+      ]
+    },
+    {
+      "id": 43,
+      "type": "Load Sampler Name",
+      "pos": {
+        "0": -118.38811492919922,
+        "1": 810.3861083984375
+      },
+      "size": {
+        "0": 253.4176788330078,
+        "1": 58
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            29
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Sampler Name"
+      },
+      "widgets_values": [
+        "dpmpp_sde"
+      ]
+    },
+    {
+      "id": 49,
+      "type": "Load Sampler Name",
+      "pos": {
+        "0": -108.38818359375,
+        "1": 910.3861083984375
+      },
+      "size": {
+        "0": 244.66107177734375,
+        "1": 58
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            39
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Sampler Name"
+      },
+      "widgets_values": [
+        "heun"
+      ]
+    },
+    {
+      "id": 46,
+      "type": "Load Scheduler Name",
+      "pos": {
+        "0": -98.3882827758789,
+        "1": 1060.38623046875
+      },
+      "size": {
+        "0": 219.56715393066406,
+        "1": 58
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            36
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Scheduler Name"
+      },
+      "widgets_values": [
+        "normal"
+      ]
+    },
+    {
+      "id": 47,
+      "type": "Load Scheduler Name",
+      "pos": {
+        "0": -88.38834381103516,
+        "1": 1160.38623046875
+      },
+      "size": {
+        "0": 210.504638671875,
+        "1": 58
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            37
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Scheduler Name"
+      },
+      "widgets_values": [
+        "karras"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "Load Scheduler Name",
+      "pos": {
+        "0": -98.3882827758789,
+        "1": 1270.38623046875
+      },
+      "size": {
+        "0": 223.60337829589844,
+        "1": 58
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            38
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Load Scheduler Name"
+      },
+      "widgets_values": [
+        "exponential"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": {
+        "0": 243.88308715820312,
+        "1": 231.2809295654297
+      },
+      "size": {
+        "0": 337.1416015625,
+        "1": 87.1045150756836
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "text, watermark"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": {
+        "0": 263.88311767578125,
+        "1": -48.71915817260742
+      },
+      "size": {
+        "0": 315.5967712402344,
+        "1": 136.07711791992188
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            4
+          ],
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "beautiful scenery nature glass bottle landscape, , purple galaxy bottle,"
+      ]
+    },
+    {
+      "id": 35,
+      "type": "Any List",
+      "pos": {
+        "0": 197.01934814453125,
+        "1": 867.7520751953125
+      },
+      "size": {
+        "0": 140,
+        "1": 146
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_a",
+          "type": "*",
+          "link": 28,
+          "label": "input_a"
+        },
+        {
+          "name": "input_b",
+          "type": "*",
+          "link": 29,
+          "label": "input_b"
+        },
+        {
+          "name": "input_c",
+          "type": "*",
+          "link": 39,
+          "label": "input_c"
+        },
+        {
+          "name": "input_d",
+          "type": "*",
+          "link": null,
+          "label": "input_d"
+        },
+        {
+          "name": "input_e",
+          "type": "*",
+          "link": null,
+          "label": "input_e"
+        },
+        {
+          "name": "input_f",
+          "type": "*",
+          "link": null,
+          "label": "input_f"
+        },
+        {
+          "name": "input_g",
+          "type": "*",
+          "link": null,
+          "label": "input_g"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": [
+            30
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "LIST"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Any List"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 34,
+      "type": "Any List",
+      "pos": {
+        "0": 199.0193328857422,
+        "1": 1078.752197265625
+      },
+      "size": {
+        "0": 140,
+        "1": 146
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "input_a",
+          "type": "*",
+          "link": 36,
+          "label": "input_a"
+        },
+        {
+          "name": "input_b",
+          "type": "*",
+          "link": 37,
+          "label": "input_b"
+        },
+        {
+          "name": "input_c",
+          "type": "*",
+          "link": 38,
+          "label": "input_c"
+        },
+        {
+          "name": "input_d",
+          "type": "*",
+          "link": null,
+          "label": "input_d"
+        },
+        {
+          "name": "input_e",
+          "type": "*",
+          "link": null,
+          "label": "input_e"
+        },
+        {
+          "name": "input_f",
+          "type": "*",
+          "link": null,
+          "label": "input_f"
+        },
+        {
+          "name": "input_g",
+          "type": "*",
+          "link": null,
+          "label": "input_g"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": [
+            31
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "LIST"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Any List"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": {
+        "0": 673.8836059570312,
+        "1": 131.2808837890625
+      },
+      "size": {
+        "0": 315,
+        "1": 466
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1,
+          "label": "模型"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 4,
+          "label": "正面条件"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6,
+          "label": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 2,
+          "label": "Latent"
+        },
+        {
+          "name": "sampler_name",
+          "type": "COMBO",
+          "link": 55,
+          "widget": {
+            "name": "sampler_name"
+          },
+          "label": "采样器"
+        },
+        {
+          "name": "scheduler",
+          "type": "COMBO",
+          "link": 56,
+          "widget": {
+            "name": "scheduler"
+          },
+          "label": "调度器"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            7
+          ],
+          "slot_index": 0,
+          "label": "Latent"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        156680208700286,
+        "fixed",
+        20,
+        8,
+        "euler",
+        "normal",
+        1
+      ]
+    },
+    {
+      "id": 50,
+      "type": "Any To Any",
+      "pos": {
+        "0": 709.0191040039062,
+        "1": 853.7520751953125
+      },
+      "size": {
+        "0": 183.42616271972656,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 40,
+          "label": "any"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            56
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "*"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Any To Any"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 41,
+      "type": "Any To Any",
+      "pos": {
+        "0": 713.0191650390625,
+        "1": 751.7520751953125
+      },
+      "size": {
+        "0": 183.42616271972656,
+        "1": 26
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "any",
+          "type": "*",
+          "link": 35,
+          "label": "any"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            55
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "*"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Any To Any"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 52,
+      "type": "Reroute",
+      "pos": {
+        "0": 712.0191650390625,
+        "1": 907.7520751953125
+      },
+      "size": [
+        166,
+        26
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 46
+        }
+      ],
+      "outputs": [
+        {
+          "name": "XY_GRID_CONTROL",
+          "type": "XY_GRID_CONTROL",
+          "links": [
+            58
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": true,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 5,
+      "type": "EmptyLatentImage",
+      "pos": {
+        "0": 211,
+        "1": 384
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            2
+          ],
+          "slot_index": 0,
+          "label": "Latent"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        512,
+        512,
+        1
+      ]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": {
+        "0": 1028,
+        "1": -23
+      },
+      "size": {
+        "0": 210,
+        "1": 46
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 7,
+          "label": "Latent"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 8,
+          "label": "VAE"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            44
+          ],
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 36,
+      "type": "XY Grid Accumulator",
+      "pos": {
+        "0": 1027,
+        "1": 93
+      },
+      "size": {
+        "0": 292.0194396972656,
+        "1": 329.6066589355469
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 44,
+          "label": "images"
+        },
+        {
+          "name": "xy_grid_control",
+          "type": "XY_GRID_CONTROL",
+          "link": 59,
+          "label": "xy_grid_control"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            32
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "images"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "XY Grid Accumulator"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 38,
+      "type": "PreviewImage",
+      "pos": {
+        "0": 1365,
+        "1": -88
+      },
+      "size": {
+        "0": 901.9364624023438,
+        "1": 831.4959106445312
+      },
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 32,
+          "label": "图像"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 40,
+      "type": "Get Batch Count",
+      "pos": {
+        "0": 1145,
+        "1": 905
+      },
+      "size": {
+        "0": 220,
+        "1": 46
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "xy_grid_control",
+          "type": "XY_GRID_CONTROL",
+          "link": 60,
+          "label": "xy_grid_control"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "STRING"
+        },
+        {
+          "name": "BatchCount",
+          "type": "INT",
+          "links": [
+            41
+          ],
+          "slot_index": 1,
+          "shape": 3,
+          "label": "BatchCount"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Get Batch Count"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 51,
+      "type": "ImpactQueueTriggerCountdown",
+      "pos": {
+        "0": 1398,
+        "1": 905
+      },
+      "size": {
+        "0": 315,
+        "1": 146
+      },
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "signal",
+          "type": "*",
+          "link": null,
+          "label": "信号"
+        },
+        {
+          "name": "total",
+          "type": "INT",
+          "link": 41,
+          "widget": {
+            "name": "total"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "signal_opt",
+          "type": "*",
+          "links": null,
+          "shape": 3,
+          "label": "信号"
+        },
+        {
+          "name": "count",
+          "type": "INT",
+          "links": null,
+          "shape": 3,
+          "label": "计数"
+        },
+        {
+          "name": "total",
+          "type": "INT",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImpactQueueTriggerCountdown"
+      },
+      "widgets_values": [
+        0,
+        10,
+        true
+      ]
+    },
+    {
+      "id": 56,
+      "type": "Reroute",
+      "pos": {
+        "0": 923,
+        "1": 911
+      },
+      "size": [
+        166,
+        26
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 58
+        }
+      ],
+      "outputs": [
+        {
+          "name": "XY_GRID_CONTROL",
+          "type": "XY_GRID_CONTROL",
+          "links": [
+            59,
+            60
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "showOutputText": true,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 4,
+      "type": "CheckpointLoaderSimple",
+      "pos": {
+        "0": -109,
+        "1": 88
+      },
+      "size": {
+        "0": 315,
+        "1": 98
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0,
+          "label": "模型"
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            3,
+            5
+          ],
+          "slot_index": 1,
+          "label": "CLIP"
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            8
+          ],
+          "slot_index": 2,
+          "label": "VAE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "anything-v5-PrtRE.safetensors"
+      ]
+    },
+    {
+      "id": 37,
+      "type": "XY Grid Helper",
+      "pos": {
+        "0": 383.01983642578125,
+        "1": 889.7520751953125
+      },
+      "size": {
+        "0": 245.89369201660156,
+        "1": 242
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "row_list",
+          "type": "LIST",
+          "link": 30,
+          "label": "row_list"
+        },
+        {
+          "name": "column_list",
+          "type": "LIST",
+          "link": 31,
+          "label": "column_list"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "row_value",
+          "type": "AXIS_VALUE",
+          "links": [
+            35
+          ],
+          "slot_index": 0,
+          "shape": 3,
+          "label": "row_value"
+        },
+        {
+          "name": "column_value",
+          "type": "AXIS_VALUE",
+          "links": [
+            40
+          ],
+          "slot_index": 1,
+          "shape": 3,
+          "label": "column_value"
+        },
+        {
+          "name": "xy_grid_control",
+          "type": "XY_GRID_CONTROL",
+          "links": [
+            46
+          ],
+          "slot_index": 2,
+          "shape": 3,
+          "label": "xy_grid_control"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "XY Grid Helper"
+      },
+      "widgets_values": [
+        "",
+        "",
+        10,
+        50,
+        50,
+        20,
+        9
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      4,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      5,
+      0,
+      3,
+      3,
+      "LATENT"
+    ],
+    [
+      3,
+      4,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      4,
+      6,
+      0,
+      3,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      5,
+      4,
+      1,
+      7,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      7,
+      0,
+      3,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      3,
+      0,
+      8,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      4,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      28,
+      42,
+      0,
+      35,
+      0,
+      "*"
+    ],
+    [
+      29,
+      43,
+      0,
+      35,
+      1,
+      "*"
+    ],
+    [
+      30,
+      35,
+      0,
+      37,
+      0,
+      "LIST"
+    ],
+    [
+      31,
+      34,
+      0,
+      37,
+      1,
+      "LIST"
+    ],
+    [
+      32,
+      36,
+      0,
+      38,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      37,
+      0,
+      41,
+      0,
+      "*"
+    ],
+    [
+      36,
+      46,
+      0,
+      34,
+      0,
+      "*"
+    ],
+    [
+      37,
+      47,
+      0,
+      34,
+      1,
+      "*"
+    ],
+    [
+      38,
+      48,
+      0,
+      34,
+      2,
+      "*"
+    ],
+    [
+      39,
+      49,
+      0,
+      35,
+      2,
+      "*"
+    ],
+    [
+      40,
+      37,
+      1,
+      50,
+      0,
+      "*"
+    ],
+    [
+      41,
+      40,
+      1,
+      51,
+      1,
+      "INT"
+    ],
+    [
+      44,
+      8,
+      0,
+      36,
+      0,
+      "IMAGE"
+    ],
+    [
+      46,
+      37,
+      2,
+      52,
+      0,
+      "*"
+    ],
+    [
+      55,
+      41,
+      0,
+      3,
+      4,
+      "COMBO"
+    ],
+    [
+      56,
+      50,
+      0,
+      3,
+      5,
+      "COMBO"
+    ],
+    [
+      58,
+      52,
+      0,
+      56,
+      0,
+      "*"
+    ],
+    [
+      59,
+      56,
+      0,
+      36,
+      1,
+      "XY_GRID_CONTROL"
+    ],
+    [
+      60,
+      56,
+      0,
+      40,
+      0,
+      "XY_GRID_CONTROL"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Group",
+      "bounding": [
+        -129,
+        626,
+        1044,
+        712
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "title": "Group",
+      "bounding": [
+        -136,
+        -122,
+        1462,
+        730
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.36011545079637797,
+      "offset": [
+        718.3332741493182,
+        300.59742176738433
+      ]
+    }
+  },
+  "version": 0.4
+}

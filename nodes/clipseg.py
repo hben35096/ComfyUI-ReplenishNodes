@@ -75,7 +75,7 @@ class CLIPSegToMask:
                     }
                 }
 
-    CATEGORY = "ReplenishNodes/Masks"
+    CATEGORY = "Replenish/Masks"
     RETURN_TYPES = ("MASK", "IMAGE", "IMAGE",)
     RETURN_NAMES = ("Mask","Heatmap Mask", "BW Mask")
 
@@ -182,7 +182,7 @@ class CombineSegMasks:
                     },
                 }
         
-    CATEGORY = "ReplenishNodes/Masks"
+    CATEGORY = "Replenish/Masks"
     RETURN_TYPES = ("MASK", "IMAGE", "IMAGE",)
     RETURN_NAMES = ("Combined Mask","Heatmap Mask", "BW Mask")
 

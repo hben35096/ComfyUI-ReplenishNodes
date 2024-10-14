@@ -196,6 +196,25 @@ class XYFLOATOutput:
     def float_output(self, float_input):
         return (float_input, )
 
+# 节点_种子数值
+class XYSeed:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required":{
+                "seed": ("INT", {"default": 0, "min": 0,"max": 0xffffffffffffffff})
+            },
+        }
+
+    RETURN_TYPES = ("INT",)
+    RETURN_NAMES = ("int",)
+    FUNCTION = "seed"
+    CATEGORY = "Replenish/QQNodes"
+    DESCRIPTION = "Enter any integer."
+
+    def seed(self, seed):
+        return (int(seed), )
+
 NODE_CLASS_MAPPINGS = {
     "Get Batch Count": GetBatchCount,
     "Load Lora Name": XYLoadLoraName,
@@ -206,7 +225,8 @@ NODE_CLASS_MAPPINGS = {
     "Load CLIP Name": XYLoadCLIPName,
     "Multi Line Text": XYMultiLineText,
     "Integer Output": XYIntegerOutput,
-    "FLOAT Output": XYFLOATOutput
+    "FLOAT Output": XYFLOATOutput,
+    "Seed Output": XYSeed
 }
 
 
@@ -220,5 +240,6 @@ NODE_CLASS_MAPPINGS = {
 #     "Load CLIP Name": "获取CLIP名称",
 #     "Multi Line Text": "多行文本输入",
 #     "Integer Output": "整数",
-#     "FLOAT Output": "浮点数"
+#     "FLOAT Output": "浮点数",
+#     "XYSeed": "种子"
 # }

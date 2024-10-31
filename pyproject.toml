@@ -1,9 +1,9 @@
 [project]
 name = "comfyui-replenishnodes"
-description = "This repository contains two custom nodes for ComfyUI that utilize the [a/CLIPSeg model](https://huggingface.co/docs/transformers/main/en/model_doc/clipseg) to generate masks for image inpainting tasks based on text prompts."
-version = "1.0.0"
+description = "The nodes in this repository are only used as secondary nodes."
+version = "1.1.0"
 license = {file = "LICENSE"}
-dependencies = ["matplotlib", "matplotlib-inline", "numpy", "open-clip-torch", "opencv-python", "Pillow", "pytorch-lightning", "torchdiffeq", "torchmetrics", "torchsde", "transformers"]
+dependencies = ["numpy", "opencv-python", "Pillow"]
 
 [project.urls]
 Repository = "https://github.com/hben35096/ComfyUI-ReplenishNodes"

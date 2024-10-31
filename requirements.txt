@@ -1,13 +1,3 @@
-
-matplotlib
-matplotlib-inline
+pillow
 numpy
-open-clip-torch
 opencv-python
-Pillow
-pytorch-lightning
-torchdiffeq
-torchmetrics
-torchsde
-transformers
-

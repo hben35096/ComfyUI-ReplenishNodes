@@ -5,7 +5,7 @@ replenish_path = os.path.abspath(os.path.dirname(__file__))
 nodes_path = os.path.join(replenish_path, "nodes")
 
 node_list = [
-    "clipseg",
+    "images_and_masks",
     "qq_nodes_option_load"
 ]
 

@@ -398,7 +398,6 @@ class RN_FillAlpha:
         batch_output_tensor = torch.cat(output_tensors, dim=0)
         return (batch_output_tensor,)
     
-    
 # 遮罩色阶调节
 class RN_MaskLevelsAdjust:
     def __init__(self):
@@ -433,14 +432,12 @@ class RN_MaskLevelsAdjust:
 
             # 直接对遮罩应用色阶调整
             ret_mask = adjust_levels(orig_mask, 0, 255, 1, output_black_point, output_white_point)
-            region_tensor = pil2mask(ret_mask).unsqueeze(0).unsqueeze(1)
+            region_tensor = pil2mask(ret_mask).unsqueeze(0)  # 添加批次维度
             ret_masks.append(region_tensor)
-            
-        # 将所有处理后的遮罩合并为一个张量
-        result_tensor = torch.cat(ret_masks, dim=0)
 
+        result_tensor = torch.cat(ret_masks, dim=0) 
         print("Number of masks processed:", len(ret_masks))
-        # print("Shape of the result tensor:", result_tensor.shape) # 调试
+        # print("自己遮罩张量的形状:", result_tensor.shape)  # 调试
 
         return (result_tensor,)
     

@@ -2,7 +2,9 @@ import numpy as np
 import torch
 from PIL import Image
 import cv2
-# 基本完成
+import os
+import random
+import folder_paths
 
 # from was-node-suite-comfyui
 def tensor2pil(image):
@@ -441,6 +443,52 @@ class RN_MaskLevelsAdjust:
 
         return (result_tensor,)
     
+class RN_PreviewImageLow:
+    def __init__(self):
+        self.output_dir = folder_paths.get_temp_directory()
+        self.type = "temp"
+        self.prefix_append = "_temp_" + ''.join(random.choice("abcdefghijklmnopqrstupvxyz") for x in range(5))
+        self.compress_level = 1
+
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "images": ("IMAGE", ),
+                "quality": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01}),  # 不透明度
+            },
+        }
+
+    RETURN_TYPES = ()
+    FUNCTION = "save_images"
+
+    OUTPUT_NODE = True
+    CATEGORY = "Replenish/Image"
+    DESCRIPTION = "Convert the input image to low-quality JPEG for preview to reduce network pressure."
+
+    def save_images(self, images, quality, filename_prefix="ComfyUI"): # , prompt=None, extra_pnginfo=None
+        filename_prefix += self.prefix_append
+        full_output_folder, filename, counter, subfolder, filename_prefix = folder_paths.get_save_image_path(
+            filename_prefix, self.output_dir, images[0].shape[1], images[0].shape[0])
+        results = list()
+        for (batch_number, image) in enumerate(images):
+            i = 255. * image.cpu().numpy()
+            img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+    
+            filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
+            file = f"{filename_with_batch_num}_{counter:05}_.jpg"  # 保存为 JPG 格式
+            quality_int = int(quality * 100)
+            img.save(os.path.join(full_output_folder, file), format="JPEG", quality=quality_int)
+    
+            results.append({
+                "filename": file,
+                "subfolder": subfolder,
+                "type": self.type
+            })
+            counter += 1
+    
+        return {"ui": {"images": results}}
+
     
 NODE_CLASS_MAPPINGS = {
     "Batch Image Blend": RN_BatchImageBlend,
@@ -448,5 +496,6 @@ NODE_CLASS_MAPPINGS = {
     "Image Blend BG": RN_ImageBlendBG,
     "Fill Alpha": RN_FillAlpha,
     "Mask Levels Adjust": RN_MaskLevelsAdjust,
-    "RN_MultipleImageBlend_2": RN_MultipleImageBlend_2,
+    "Multiple Image Blend 2": RN_MultipleImageBlend_2,
+    "Preview Image Low": RN_PreviewImageLow,
 }

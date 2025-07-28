@@ -202,11 +202,6 @@ class RN_MultipleImageBlend:
 
         return base
 
-
-    
-
-# 可以了，准备增加对齐3种方法 完成
-# 准备分离对齐方法，
 class RN_ImageBlendBG:
     def __init__(self):
         pass
@@ -218,7 +213,7 @@ class RN_ImageBlendBG:
                 "image_bg": ("IMAGE",),
                 "image": ("IMAGE",),
                 "align": (["size", "top left", "center"],),
-                "opacity": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "opacity": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
             },
         }
 
@@ -244,17 +239,14 @@ class RN_ImageBlendBG:
     def image_blend(self, image_bg_pil, img_pil, align, opacity):
         # 获取图像的尺寸
         bg_width, bg_height = image_bg_pil.size
-        # print(f"背景图像尺寸: 宽度={bg_width}, 高度={bg_height}") # 调试
-
         img_width, img_height = img_pil.size
-        # print(f"前景图像原始尺寸: 宽度={img_width}, 高度={img_height}") # 调试
 
         # 调整前景图像尺寸以匹配背景图像尺寸
         if align == "size":
             aspect_ratio = img_width / img_height
             bg_aspect_ratio = bg_width / bg_height
 
-            if aspect_ratio > bg_aspect_ratio:
+            if aspect_ratio < bg_aspect_ratio: # 似乎 > 改成小于更合理
                 new_height = bg_height
                 new_width = int(bg_height * aspect_ratio)
             else:
@@ -350,8 +342,6 @@ class RN_MultipleImageBlend_2:
 
         output_tensor = pil2tensor(image_bg_pil)
         return (output_tensor,)
-
-
     
 # 这个基本功能完成了，需要让它更灵活，还要做成批处理 完成
 class RN_FillAlpha:
@@ -398,6 +388,32 @@ class RN_FillAlpha:
 
         # 返回批量图像张量
         batch_output_tensor = torch.cat(output_tensors, dim=0)
+        return (batch_output_tensor,)
+
+class RN_ToRGB:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "images": ("IMAGE",),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "to_grb"
+    CATEGORY = "Replenish/Image"
+
+    def to_grb(self, images):
+        output_tensors = []
+        for image in images:
+            image = tensor2pil(image).convert("RGB")
+            output_tensor = pil2tensor(image)
+            output_tensors.append(output_tensor)
+        batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
         return (batch_output_tensor,)
     
 # 遮罩色阶调节
@@ -497,5 +513,6 @@ NODE_CLASS_MAPPINGS = {
     "Fill Alpha": RN_FillAlpha,
     "Mask Levels Adjust": RN_MaskLevelsAdjust,
     "Multiple Image Blend 2": RN_MultipleImageBlend_2,
-    "Preview Image Low": RN_PreviewImageLow,
+    "Preview Image-JPEG": RN_PreviewImageLow,
+    "To RGB": RN_ToRGB,
 }

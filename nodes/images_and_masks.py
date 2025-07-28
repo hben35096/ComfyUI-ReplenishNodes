@@ -611,5 +611,5 @@ NODE_CLASS_MAPPINGS = {
     "Preview Image-JPEG": RN_PreviewImageLow,
     "To RGB": RN_ToRGB,
     "Reference Resize": RN_Reference_Resize,
-    "RN_BatchImageAlign": RN_BatchImageAlign,
+    "Image Align": RN_BatchImageAlign,
 }

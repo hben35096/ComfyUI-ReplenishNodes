@@ -202,6 +202,101 @@ class RN_MultipleImageBlend:
 
         return base
 
+# 根据参考图改变图片大小，输出是 RGBA
+class RN_Reference_Resize:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "reference_image": ("IMAGE",),
+                "images": ("IMAGE",),
+            },
+        }
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "image_resize"
+
+    CATEGORY = "Replenish/Image"
+    def image_resize(self, reference_image, images):
+        output_tensors = []
+        ref_image_pil = tensor2pil(reference_image).convert("RGBA")
+        ref_width, ref_height = ref_image_pil.size
+        ref_aspect_ratio = ref_width / ref_height
+        for img in images:
+            img_pil = tensor2pil(img).convert("RGBA")
+            img_width, img_height = img_pil.size
+            aspect_ratio = img_width / img_height
+            
+            if aspect_ratio < ref_aspect_ratio:
+                new_height = ref_height
+                new_width = int(ref_height* aspect_ratio)
+            else:
+                new_width = ref_width
+                new_height = int(ref_width / aspect_ratio)
+
+            img_pil = img_pil.resize((new_width, new_height), Image.LANCZOS)
+            output_tensor = pil2tensor(img_pil)
+            output_tensors.append(output_tensor)
+        batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
+        return (batch_output_tensor,)
+
+class RN_BatchImageAlign:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image_bg": ("IMAGE",),
+                "images_fg": ("IMAGE",),
+                "align": (["◤ top left", "top right ◥", "◣ bottom left", "bottom right ◢", "center ▣"],),
+                "offset_x": ("INT", {"default": 0, "min": -2048, "max": 2048, "step": 1,}),
+                "offset_y": ("INT", {"default": 0, "min": -2048, "max": 2048, "step": 1,}),
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("image",)
+    FUNCTION = "align_images"
+
+    CATEGORY = "Replenish/Image"
+    def align_images(self, image_bg, images_fg, align, offset_x, offset_y):
+        output_tensors = []
+        image_bg_pil = tensor2pil(image_bg).convert("RGBA")
+        bg_width, bg_height = image_bg_pil.size
+        x, y = 0, 0 
+        for img in images_fg:
+            img_pil = tensor2pil(img).convert("RGBA")
+            width, height = img_pil.size
+            if align == "◤ top left":
+                x = 0 + offset_x
+                y = 0 + offset_y
+            elif align == "top right ◥":
+                x = bg_width - width + offset_x
+                y = 0 + offset_y
+            elif align == "◣ bottom left":
+                x = 0 + offset_x
+                y = bg_height - height + offset_y
+            elif align == "bottom right ◢":
+                x = bg_width - width + offset_x
+                y = bg_height - height + offset_y
+            elif align == "center ▣":
+                x = (bg_width - width) // 2 + offset_x
+                y = (bg_height - height) // 2 + offset_y
+
+            new_image_pil = image_bg_pil
+            new_image_pil.paste(img_pil, (x, y), img_pil)  # 原地粘贴，别赋值
+            output_tensor = pil2tensor(new_image_pil)
+            output_tensors.append(output_tensor)
+            
+        batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
+        return (batch_output_tensor,)
+
+
 class RN_ImageBlendBG:
     def __init__(self):
         pass
@@ -515,4 +610,6 @@ NODE_CLASS_MAPPINGS = {
     "Multiple Image Blend 2": RN_MultipleImageBlend_2,
     "Preview Image-JPEG": RN_PreviewImageLow,
     "To RGB": RN_ToRGB,
+    "Reference Resize": RN_Reference_Resize,
+    "RN_BatchImageAlign": RN_BatchImageAlign,
 }

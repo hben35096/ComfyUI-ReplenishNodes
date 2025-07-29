@@ -243,6 +243,7 @@ class RN_Reference_Resize:
         batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
         return (batch_output_tensor,)
 
+# 前后景对齐
 class RN_BatchImageAlign:
     def __init__(self):
         pass
@@ -253,7 +254,7 @@ class RN_BatchImageAlign:
             "required": {
                 "image_bg": ("IMAGE",),
                 "images_fg": ("IMAGE",),
-                "align": (["◤ top left", "top right ◥", "◣ bottom left", "bottom right ◢", "center ▣"],),
+                "align": (["◤ top left", "top center ▼", "top right ◥", "◣ bottom left", "bottom center ▲", "bottom right ◢", "center ◆"],),
                 "offset_x": ("INT", {"default": 0, "min": -2048, "max": 2048, "step": 1,}),
                 "offset_y": ("INT", {"default": 0, "min": -2048, "max": 2048, "step": 1,}),
             },
@@ -275,16 +276,22 @@ class RN_BatchImageAlign:
             if align == "◤ top left":
                 x = 0 + offset_x
                 y = 0 + offset_y
+            if align == "top center ▼":
+                x = (bg_width - width) // 2 + offset_x
+                y = 0 + offset_y
             elif align == "top right ◥":
                 x = bg_width - width + offset_x
                 y = 0 + offset_y
             elif align == "◣ bottom left":
                 x = 0 + offset_x
                 y = bg_height - height + offset_y
+            elif align == "bottom center ▲":
+                x = (bg_width - width) // 2 + offset_x
+                y = bg_height - height + offset_y
             elif align == "bottom right ◢":
                 x = bg_width - width + offset_x
                 y = bg_height - height + offset_y
-            elif align == "center ▣":
+            elif align == "center ◆":
                 x = (bg_width - width) // 2 + offset_x
                 y = (bg_height - height) // 2 + offset_y
 
@@ -585,6 +592,8 @@ class RN_PreviewImageLow:
         for (batch_number, image) in enumerate(images):
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+            if img.mode == 'RGBA':
+                img = img.convert('RGB')  # 去掉透明通道以兼容 JPEG
     
             filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
             file = f"{filename_with_batch_num}_{counter:05}_.jpg"  # 保存为 JPG 格式

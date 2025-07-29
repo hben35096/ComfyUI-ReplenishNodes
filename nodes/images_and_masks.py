@@ -260,13 +260,14 @@ class RN_BatchImageAlign:
             },
         }
 
-    RETURN_TYPES = ("IMAGE",)
-    RETURN_NAMES = ("image",)
+    RETURN_TYPES = ("IMAGE", "IMAGE",)
+    RETURN_NAMES = ("merge_image", "only_fg",)
     FUNCTION = "align_images"
 
     CATEGORY = "Replenish/Image"
     def align_images(self, image_bg, images_fg, align, offset_x, offset_y):
         output_tensors = []
+        empty_tensors = []
         image_bg_pil = tensor2pil(image_bg).convert("RGBA")
         bg_width, bg_height = image_bg_pil.size
         x, y = 0, 0 
@@ -299,9 +300,16 @@ class RN_BatchImageAlign:
             new_image_pil.paste(img_pil, (x, y), img_pil)  # 原地粘贴，别赋值
             output_tensor = pil2tensor(new_image_pil)
             output_tensors.append(output_tensor)
+
+            empty_img = Image.new("RGBA", (bg_width, bg_height), (0, 0, 0, 0))  # 全透明背景
+            empty_img.paste(img_pil, (x, y), img_pil)
+            empty_img_tensor = pil2tensor(empty_img)
+            empty_tensors.append(empty_img_tensor)
+            
             
         batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
-        return (batch_output_tensor,)
+        empty_batch_output_tensor = torch.cat(empty_tensors, dim=0) 
+        return (batch_output_tensor, empty_batch_output_tensor)
 
 
 class RN_ImageBlendBG:

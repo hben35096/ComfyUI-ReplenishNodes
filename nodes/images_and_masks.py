@@ -581,7 +581,7 @@ class RN_PreviewImageLow:
         return {
             "required": {
                 "images": ("IMAGE", ),
-                "quality": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01}),  # 不透明度
+                "quality": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01}),  # 质量
             },
         }
 
@@ -617,6 +617,39 @@ class RN_PreviewImageLow:
     
         return {"ui": {"images": results}}
 
+class RN_ToJPEG:
+    def __init__(self):
+        pass
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "images": ("IMAGE", ),
+                "quality": ("FLOAT", {"default": 0.5, "min": 0.0, "max": 1.0, "step": 0.01}),  # 质量
+            },
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "low_quality_images"
+
+    OUTPUT_NODE = True
+    CATEGORY = "Replenish/Image"
+    DESCRIPTION = "Convert the input image to low - quality JPEG format."
+
+    def low_quality_images(self, images, quality):
+        from io import BytesIO
+        buffer = BytesIO()
+        output_tensors = []
+        for image in images:
+            image = tensor2pil(image).convert("RGB")
+            image.save(buffer, format="JPEG", quality=int(quality * 100))
+            buffer.seek(0)
+            compressed_image = Image.open(buffer)
+            output_tensor = pil2tensor(compressed_image)
+            output_tensors.append(output_tensor)
+        batch_output_tensor = torch.cat(output_tensors, dim=0) # 返回批量图像张量
+        return (batch_output_tensor,)
     
 NODE_CLASS_MAPPINGS = {
     "Batch Image Blend": RN_BatchImageBlend,
@@ -627,6 +660,7 @@ NODE_CLASS_MAPPINGS = {
     "Multiple Image Blend 2": RN_MultipleImageBlend_2,
     "Preview Image-JPEG": RN_PreviewImageLow,
     "To RGB": RN_ToRGB,
+    "To JPEG": RN_ToJPEG,
     "Reference Resize": RN_Reference_Resize,
     "Image Align": RN_BatchImageAlign,
 }

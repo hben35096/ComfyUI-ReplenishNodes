@@ -15,7 +15,7 @@ class RN_BatchImageBlend(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_BatchImageBlend",
+            node_id="Batch Image Blend",
             display_name="Batch Image Blend",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -70,7 +70,7 @@ class RN_MultipleImageBlend(io.ComfyNode):
             max=50,                          # maximum number of inputs allowed
         )
         return io.Schema(
-            node_id="RN_MultipleImageBlend",
+            node_id="Multiple Image Blend",
             display_name="Multiple Image Blend",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -150,7 +150,7 @@ class RN_Reference_Resize(io.ComfyNode):
             max=50,                          # maximum number of inputs allowed
         )
         return io.Schema(
-            node_id="RN_Reference_Resize",
+            node_id="Reference Resize",
             display_name="Reference Resize",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -208,7 +208,7 @@ class RN_BatchImageAlign(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_BatchImageAlign",
+            node_id="Image Align",
             display_name="Batch Image Align",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -277,7 +277,7 @@ class RN_ImageBlendBG(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_ImageBlendBG",
+            node_id="Image Blend BG",
             display_name="Image Blend BG",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -318,7 +318,7 @@ class RN_MultipleImageBlend_2(io.ComfyNode):
             max=50,                          # maximum number of inputs allowed
         )
         return io.Schema(
-            node_id="RN_MultipleImageBlend_2",
+            node_id="Multiple Image Blend 2",
             display_name="Multiple Image Blend 2",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -360,7 +360,7 @@ class RN_FillAlpha(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_FillAlpha",
+            node_id="Fill Alpha",
             display_name="Fill Alpha",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -408,7 +408,7 @@ class RN_ToRGB(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_ToRGB",
+            node_id="To RGB",
             display_name="To RGB",
             category="Replenish/Image",
             search_aliases=["Channel", ],
@@ -436,7 +436,7 @@ class RN_MaskLevelsAdjust(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_MaskLevelsAdjust",
+            node_id="Mask Levels Adjust",
             display_name="Mask Levels Adjust",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],
@@ -485,7 +485,7 @@ class RN_PreviewImageLow(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_PreviewImageLow",
+            node_id="Preview Image-JPEG",
             display_name="Preview Image-JPEG",
             category="Replenish/Image",
             search_aliases=["Select image", ],
@@ -629,7 +629,7 @@ class RN_ToJPEG(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="RN_ToJPEG",
+            node_id="To JPEG",
             display_name="To JPEG",
             category="Replenish/Image",
             search_aliases=["Image overlay", ],

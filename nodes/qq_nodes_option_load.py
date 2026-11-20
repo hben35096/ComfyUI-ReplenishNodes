@@ -6,7 +6,7 @@ class GetBatchCount(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="GetBatchCount",
+            node_id="Get Batch Count",
             display_name="Get Batch Count",
             category="Replenish/QQNodes",
             search_aliases=["QQNodes",],
@@ -33,7 +33,7 @@ class XYLoadLoraName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadLoraName",
+            node_id="Load Lora Name",
             display_name="Load Lora Name",
             category="Replenish/QQNodes",
             search_aliases=["lora",],
@@ -55,7 +55,7 @@ class XYLoadSamplerName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadSamplerName",
+            node_id="Load Sampler Name",
             display_name="Load Sampler Name",
             category="Replenish/QQNodes",
             search_aliases=["lora",],
@@ -78,7 +78,7 @@ class XYLoadSchedulerName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadSchedulerName",
+            node_id="Load Scheduler Name",
             display_name="Load Scheduler Name",
             category="Replenish/QQNodes",
             search_aliases=["scheduler",],
@@ -99,7 +99,7 @@ class XYLoadCkptName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadCkptName",
+            node_id="Load Ckpt Name",
             display_name="Load Checkpoint Name",
             category="Replenish/QQNodes",
             search_aliases=["scheduler",],
@@ -120,7 +120,7 @@ class XYLoadUNETName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadUNETName",
+            node_id="Load UNET Name",
             display_name="Load diffusion_model Name",
             category="Replenish/QQNodes",
             search_aliases=["scheduler",],
@@ -142,7 +142,7 @@ class XYLoadCLIPName(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="XYLoadCLIPName",
+            node_id="Load CLIP Name",
             display_name="Load CLIP Model Name",
             category="Replenish/QQNodes",
             search_aliases=["scheduler",],
